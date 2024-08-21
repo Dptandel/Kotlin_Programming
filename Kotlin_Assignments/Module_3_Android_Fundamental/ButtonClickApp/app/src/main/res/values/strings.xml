@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">ButtonClickApp</string>
+    <string name="red">Red</string>
+    <string name="green">Green</string>
+    <string name="blue">Blue</string>
+    <string name="clear">Clear</string>
+    <string name="click_to_see_the_magic">Click to see the magic</string>
+</resources>
