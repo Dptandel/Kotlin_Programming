@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">NumRangeApp</string>
+    <string name="print_numbers">Print Numbers</string>
+    <string name="enter_end_number">Enter End Number</string>
+    <string name="enter_start_number">Enter Start Number</string>
+    <string name="printed_numbers_appear_here">Printed numbers appear here</string>
+</resources>
