@@ -2,9 +2,7 @@ package com.tops.kotlin.toolbarspinnersearchapp
 
 import android.os.Bundle
 import android.view.View
-import android.widget.AdapterView
 import android.widget.ArrayAdapter
-import android.widget.Spinner
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.tops.kotlin.toolbarspinnersearchapp.databinding.ActivityMainBinding
@@ -12,45 +10,45 @@ import com.tops.kotlin.toolbarspinnersearchapp.databinding.ActivityMainBinding
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-    private lateinit var category: Array<String>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        category = resources.getStringArray(R.array.category)
+        // Set up Spinner
+        val items = arrayOf("Top News", "Business", "Politics", "Sports", "Technology", "Movies")
+        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, items)
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
+        binding.spinner.adapter = adapter
 
-        setSupportActionBar(binding.toolbar)
-        supportActionBar?.setDisplayShowTitleEnabled(false)
-        binding.toolbar.setLogo(R.drawable.ic_launcher_foreground)
-
-        val spinnerAdapter = ArrayAdapter.createFromResource(
-            this,
-            R.array.category,
-            R.layout.spinner_dropdown_item
-        )
-
-        val navigationSpinner = Spinner(this)
-        navigationSpinner.adapter = spinnerAdapter
-
-        binding.toolbar.addView(navigationSpinner)
-
-        navigationSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                Toast.makeText(
-                    this@MainActivity,
-                    "You selected: ${category[position]}",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-
-            override fun onNothingSelected(parent: AdapterView<*>?) {}
+        // Set up Search Button click listener
+        binding.searchButton.setOnClickListener {
+            performSearch()
         }
+    }
+
+    private fun performSearch() {
+        // Show the loading spinner
+        binding.progressBar.visibility = View.VISIBLE
+
+        // Simulate a network operation or processing
+        binding.searchInput.isEnabled = false
+        binding.searchButton.isEnabled = false
+
+        // Add delay for demonstration purposes
+        binding.searchInput.postDelayed({
+            // Hide the loading spinner
+            binding.progressBar.visibility = View.GONE
+
+            // Enable inputs again
+            binding.searchInput.isEnabled = true
+            binding.searchButton.isEnabled = true
+
+            // handle the search results here
+            // For demonstration, just showing a log
+            val searchText = binding.searchInput.text.toString()
+            Toast.makeText(this, "Searching for: $searchText", Toast.LENGTH_SHORT).show()
+        }, 2000) // Simulated delay
     }
 }
