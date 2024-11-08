@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".AddStudentActivity">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_margin="16dp"
+        android:text="Student Details"
+        android:textColor="@color/black"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/etFirstName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="24dp"
+        android:hint="First Name"
+        app:layout_constraintBottom_toTopOf="@+id/etLastName"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/title" />
+
+    <EditText
+        android:id="@+id/etLastName"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Last Name"
+        app:layout_constraintBottom_toTopOf="@+id/etEmail"
+        app:layout_constraintEnd_toEndOf="@+id/etFirstName"
+        app:layout_constraintStart_toStartOf="@+id/etFirstName"
+        app:layout_constraintTop_toBottomOf="@+id/etFirstName" />
+
+    <EditText
+        android:id="@+id/etEmail"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Email"
+        android:inputType="textEmailAddress"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerCourse"
+        app:layout_constraintEnd_toEndOf="@+id/etLastName"
+        app:layout_constraintStart_toStartOf="@+id/etLastName"
+        app:layout_constraintTop_toBottomOf="@+id/etLastName" />
+
+    <Spinner
+        android:id="@+id/spinnerCourse"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:prompt="@string/select_course"
+        app:layout_constraintBottom_toTopOf="@+id/etAddress"
+        app:layout_constraintEnd_toEndOf="@+id/etEmail"
+        app:layout_constraintStart_toStartOf="@+id/etEmail"
+        app:layout_constraintTop_toBottomOf="@+id/etEmail" />
+
+    <EditText
+        android:id="@+id/etAddress"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Address"
+        app:layout_constraintBottom_toTopOf="@+id/etPincode"
+        app:layout_constraintEnd_toEndOf="@+id/spinnerCourse"
+        app:layout_constraintStart_toStartOf="@+id/spinnerCourse"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerCourse" />
+
+    <EditText
+        android:id="@+id/etPincode"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Pincode"
+        android:inputType="number"
+        app:layout_constraintBottom_toTopOf="@+id/spinnerCity"
+        app:layout_constraintEnd_toEndOf="@+id/etAddress"
+        app:layout_constraintStart_toStartOf="@+id/etAddress"
+        app:layout_constraintTop_toBottomOf="@+id/etAddress" />
+
+    <Spinner
+        android:id="@+id/spinnerCity"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:prompt="@string/select_city"
+        app:layout_constraintBottom_toTopOf="@+id/etTotalFees"
+        app:layout_constraintEnd_toEndOf="@+id/etPincode"
+        app:layout_constraintStart_toStartOf="@+id/etPincode"
+        app:layout_constraintTop_toBottomOf="@+id/etPincode" />
+
+    <EditText
+        android:id="@+id/etTotalFees"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Total Fees"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toTopOf="@+id/etContactNumber"
+        app:layout_constraintEnd_toEndOf="@+id/spinnerCity"
+        app:layout_constraintStart_toStartOf="@+id/spinnerCity"
+        app:layout_constraintTop_toBottomOf="@+id/spinnerCity" />
+
+    <EditText
+        android:id="@+id/etContactNumber"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Contact Number"
+        android:inputType="phone"
+        app:layout_constraintBottom_toTopOf="@+id/etMarks"
+        app:layout_constraintEnd_toEndOf="@+id/etTotalFees"
+        app:layout_constraintStart_toStartOf="@+id/etTotalFees"
+        app:layout_constraintTop_toBottomOf="@+id/etTotalFees" />
+
+    <EditText
+        android:id="@+id/etMarks"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="Marks"
+        android:inputType="numberDecimal"
+        app:layout_constraintBottom_toTopOf="@+id/btnSubmit"
+        app:layout_constraintEnd_toEndOf="@+id/etContactNumber"
+        app:layout_constraintStart_toStartOf="@+id/etContactNumber"
+        app:layout_constraintTop_toBottomOf="@+id/etContactNumber" />
+
+    <Button
+        android:id="@+id/btnSubmit"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="68dp"
+        android:text="Submit"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/etMarks"
+        app:layout_constraintStart_toStartOf="@+id/etMarks"
+        app:layout_constraintTop_toBottomOf="@+id/etMarks" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
