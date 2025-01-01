@@ -1,16 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".fragments.RtoOfficeFragment">
 
-    <TextView
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/til_rto_office"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="RTO Office Fragment"
-        android:textSize="22sp"
-        android:gravity="center"
-        android:textStyle="bold" />
+        android:layout_height="60dp"
+        android:hint="Select State"
+        app:endIconMode="dropdown_menu"
+        app:boxBackgroundMode="outline"
+        android:layout_marginHorizontal="4dp">
 
-</FrameLayout>
+        <AutoCompleteTextView
+            android:id="@+id/ac_tv_state"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:padding="8dp"
+            android:inputType="none"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+</LinearLayout>

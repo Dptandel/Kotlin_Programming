@@ -1,60 +1,119 @@
 package com.tops.kotlin.rtodrivinglicensetest.fragments
 
+import android.annotation.SuppressLint
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
+import androidx.room.Room
 import com.tops.kotlin.rtodrivinglicensetest.R
+import com.tops.kotlin.rtodrivinglicensetest.databases.AppDatabase
+import com.tops.kotlin.rtodrivinglicensetest.databinding.FragmentLearnBinding
+import com.tops.kotlin.rtodrivinglicensetest.models.Question
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [LearnFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class LearnFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
+    private lateinit var binding: FragmentLearnBinding
+    private var questions: List<Question> = emptyList()
+    private var currentQuestionIndex = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_learn, container, false)
+    ): View {
+        binding = FragmentLearnBinding.inflate(inflater, container, false)
+
+        // Load questions from the database
+        loadQuestions()
+
+        // Navigation button click listeners
+        binding.btnPrevious.setOnClickListener {
+            if (currentQuestionIndex > 0) {
+                currentQuestionIndex--
+                showQuestion(currentQuestionIndex)
+            }
+        }
+
+        binding.btnNext.setOnClickListener {
+            if (currentQuestionIndex < questions.size - 1) {
+                currentQuestionIndex++
+                showQuestion(currentQuestionIndex)
+            }
+        }
+
+        return binding.root
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment LearnFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            LearnFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
+    private fun loadQuestions() {
+        val database = Room.databaseBuilder(requireContext(), AppDatabase::class.java, "pquestions")
+            .createFromAsset("rtodl.db")
+            .build()
+
+        CoroutineScope(Dispatchers.IO).launch {
+            val loadedQuestions = database.getPQDao().getAllQuestions()
+
+            withContext(Dispatchers.Main) {
+                if (loadedQuestions.isEmpty()) {
+                    Toast.makeText(requireContext(), "No Questions Found", Toast.LENGTH_SHORT)
+                        .show()
+                } else {
+                    questions = loadedQuestions
+                    showQuestion(currentQuestionIndex) // Show the first question
                 }
             }
+        }
+    }
+
+    @SuppressLint("SetTextI18n")
+    private fun showQuestion(index: Int) {
+        val question = questions[index]
+
+        // Update question number
+        binding.tvQuestionNumber.text = "${index + 1}/${questions.size}"
+
+        // Set the question text
+        binding.tvQuestion.text = question.question
+
+        // Set up options according to questions
+        binding.rbOptionA.text = question.option1
+        binding.rbOptionB.text = question.option2
+        binding.rbOptionC.text = question.option3
+
+        // Set the right option
+        when (question.answer) {
+            1 -> binding.rbOptionA.isChecked = true
+            2 -> binding.rbOptionB.isChecked = true
+            3 -> binding.rbOptionC.isChecked = true
+            else -> {
+                binding.rbOptionA.isChecked = false
+                binding.rbOptionB.isChecked = false
+                binding.rbOptionC.isChecked = false
+            }
+        }
+
+        // change the right option color and other option color remain same
+        if (binding.rbOptionA.isChecked) {
+            binding.rbOptionA.setTextColor(resources.getColor(R.color.green))
+            binding.rbOptionB.setTextColor(resources.getColor(R.color.black))
+            binding.rbOptionC.setTextColor(resources.getColor(R.color.black))
+        } else if (binding.rbOptionB.isChecked) {
+            binding.rbOptionA.setTextColor(resources.getColor(R.color.black))
+            binding.rbOptionB.setTextColor(resources.getColor(R.color.green))
+            binding.rbOptionC.setTextColor(resources.getColor(R.color.black))
+        } else if (binding.rbOptionC.isChecked) {
+            binding.rbOptionA.setTextColor(resources.getColor(R.color.black))
+            binding.rbOptionB.setTextColor(resources.getColor(R.color.black))
+            binding.rbOptionC.setTextColor(resources.getColor(R.color.green))
+        }
+
+        // Enable/Disable navigation buttons
+        binding.btnPrevious.isEnabled = index > 0
+        binding.btnNext.isEnabled = index < questions.size - 1
     }
 }
