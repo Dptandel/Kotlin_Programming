@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center"
+    tools:context=".MainActivity">
+
+    <Button
+        android:id="@+id/btnPlayRaw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Play from Raw Resource" />
+
+    <Button
+        android:id="@+id/btnPlayMemory"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Play from Mobile Memory" />
+
+    <Button
+        android:id="@+id/btnPlayServer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Play from Server" />
+
+    <TextView
+        android:id="@+id/tvStatus"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="16dp"
+        android:text="Status: Idle"
+        android:textSize="16sp" />
+</LinearLayout>
